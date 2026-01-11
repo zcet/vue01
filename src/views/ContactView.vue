@@ -2,7 +2,7 @@
   <div id="contact">
     <div class="contact-card">
       <img src="../assets/2.jpg" alt="Profile" />
-      <h1>Sirawit Hongsa</h1>
+      <h1> Concact Sirawit Hongsa</h1>
       <p class="subtitle">The test page</p>
 
       <div class="contact-info">
