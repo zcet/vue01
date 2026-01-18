@@ -8,22 +8,23 @@
     <table class="table table-bordered table-striped">
       <thead class="table-dark">
         <tr>
-          <th>ลำดับที่</th>
           <th>รหัสลูกค้า</th>
-          <th>ชื่อ</th>
-          <th>นามสกุล</th>
-          <th>เบอร์โทร</th>
-          <th>ชื่อผู้ใช้</th>
+          <th>ชื่อ-สกุล</th>
+          <th>แผนก</th>
+          <th>เงินเดือน</th>
+          <th>สถานะการทำงาน</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(customer, index) in customers" :key="customer.customer_id">
-          <td>{{ index + 1 }}</td>   <!--แสดงลำดับที่-->
-          <td>{{ customer.customer_id }}</td>
-          <td>{{ customer.firstName }}</td>
-          <td>{{ customer.lastName }}</td>
-          <td>{{ customer.phone }}</td>
-          <td>{{ customer.username }}</td>
+        <tr v-for="employees  in employees" :key="employees.emp_id">
+          <td>{{ employees.emp_id }}</td>
+          <td>{{ employees.full_name}}</td>
+          <td>{{ employees.department }}</td>
+          <td>{{ employees.salary }}</td>
+          <td>
+  <span v-if="employees.active == 1">ปกติ</span>
+  <span v-else>ลาออก</span>
+</td>
         </tr>
       </tbody>
     </table>
@@ -44,20 +45,20 @@
 import { ref, onMounted } from "vue";
 
 export default {
-  name: "CustomerList",
+  name: "EmployeesList",
   setup() {
-    const customers = ref([]);
+    const employees = ref([]);
     const loading = ref(true);
     const error = ref(null);
 
     // ฟังก์ชันดึงข้อมูลจาก API
-    const fetchCustomers = async () => {
+    const fetchEmployees = async () => {
       try {
-        const response = await fetch("http://localhost/vue01/php_api/show_customer.php");
+        const response = await fetch("http://localhost/vue01/php_api/employee.php");
         if (!response.ok) {
           throw new Error("ไม่สามารถดึงข้อมูลได้");
         }
-        customers.value = await response.json();
+        employees.value = await response.json();
       } catch (err) {
         error.value = err.message;
       } finally {
@@ -66,11 +67,11 @@ export default {
     };
 
     onMounted(() => {
-      fetchCustomers();
+      fetchEmployees();
     });
 
     return {
-      customers,
+      employees,
       loading,
       error
     };

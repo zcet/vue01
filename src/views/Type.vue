@@ -2,28 +2,20 @@
 <template>
 
   <div class="container mt-4">
-    <h2 class="mb-3">รายชื่อลูกค้า</h2>
+    <h2 class="mb-3">รายการประเภทสินค้า</h2>
     
     <!-- ตารางแสดงข้อมูลลูกค้า -->
     <table class="table table-bordered table-striped">
       <thead class="table-dark">
         <tr>
-          <th>ลำดับที่</th>
-          <th>รหัสลูกค้า</th>
-          <th>ชื่อ</th>
-          <th>นามสกุล</th>
-          <th>เบอร์โทร</th>
-          <th>ชื่อผู้ใช้</th>
+          <th>รหัสประเภทสินค้า</th>
+          <th>ชื่อประเภทสินค้า</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(customer, index) in customers" :key="customer.customer_id">
-          <td>{{ index + 1 }}</td>   <!--แสดงลำดับที่-->
-          <td>{{ customer.customer_id }}</td>
-          <td>{{ customer.firstName }}</td>
-          <td>{{ customer.lastName }}</td>
-          <td>{{ customer.phone }}</td>
-          <td>{{ customer.username }}</td>
+          <tr v-for="type in types" :key="type.type_id">
+          <td>{{ type.type_id }}</td>
+          <td>{{ type.type_name }}</td>
         </tr>
       </tbody>
     </table>
@@ -44,20 +36,20 @@
 import { ref, onMounted } from "vue";
 
 export default {
-  name: "CustomerList",
+  name: "TypeList",
   setup() {
-    const customers = ref([]);
+    const types = ref([]);
     const loading = ref(true);
     const error = ref(null);
 
     // ฟังก์ชันดึงข้อมูลจาก API
-    const fetchCustomers = async () => {
+    const fetchTypes = async () => {
       try {
-        const response = await fetch("http://localhost/vue01/php_api/show_customer.php");
+        const response = await fetch("http://localhost/vue01/php_api/show_type.php");
         if (!response.ok) {
           throw new Error("ไม่สามารถดึงข้อมูลได้");
         }
-        customers.value = await response.json();
+        types.value = await response.json();
       } catch (err) {
         error.value = err.message;
       } finally {
@@ -66,11 +58,11 @@ export default {
     };
 
     onMounted(() => {
-      fetchCustomers();
+      fetchTypes();
     });
 
     return {
-      customers,
+      types,
       loading,
       error
     };

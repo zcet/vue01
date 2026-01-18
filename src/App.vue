@@ -18,10 +18,16 @@
           <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/about">About</a>
+          <a class="nav-link" href="/about">Customer</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/Contact">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/Type">Type</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/Employees">Employees</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
