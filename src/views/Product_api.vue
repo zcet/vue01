@@ -1,32 +1,36 @@
-
 <template>
-
   <div class="container mt-4">
-    <h2 class="mb-3">รายชื่อพนักงาน</h2>
-     <div class="mb-3">
-    <a class="btn btn-primary" href="/add_employee" role="button">Add</a>
+    <h2 class="mb-3">แสดงข้อมูลสินค้า</h2>
+    
+
+     <div class="mb-3 text-start">
+      <a class="btn btn-primary" href="/add_customer" role="button">Add+</a>
     </div>
     <!-- ตารางแสดงข้อมูลลูกค้า -->
     <table class="table table-bordered table-striped">
       <thead class="table-dark">
         <tr>
-          <th>รหัสลูกค้า</th>
-          <th>ชื่อ-สกุล</th>
-          <th>แผนก</th>
-          <th>เงินเดือน</th>
-          <th>สถานะการทำงาน</th>
+          <th>ลำดับที่</th>
+          <th>รหัสสินค้า</th>
+          <th>ชื่อสินค้า</th>
+          <th>รายละเอียด</th>
+          <th>ราคา</th>
+          <th>รูปภาพ</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="employees  in employees" :key="employees.emp_id">
-          <td>{{ employees.emp_id }}</td>
-          <td>{{ employees.full_name}}</td>
-          <td>{{ employees.department }}</td>
-          <td>{{ employees.salary }}</td>
-          <td>
-  <span v-if="employees.active == 1">ปกติ</span>
-  <span v-else>ลาออก</span>
-</td>
+        <tr v-for="(data,index) in Alldata" :key="data.id">
+          <td>{{ index + 1 }}</td>   <!--แสดงลำดับที่-->
+          <td>{{ data.id }}</td>
+          <td>{{ data.title }}</td>
+          <td>{{ data.description}}</td>
+          <td>{{ data.price }}</td>
+         <td>
+        <img
+            :src="data.image"
+            width="150"
+            height="150" >
+          </td>
         </tr>
       </tbody>
     </table>
@@ -47,20 +51,20 @@
 import { ref, onMounted } from "vue";
 
 export default {
-  name: "EmployeesList",
+  name: "DataList",
   setup() {
-    const employees = ref([]);
+    const Alldata = ref([]);
     const loading = ref(true);
     const error = ref(null);
 
     // ฟังก์ชันดึงข้อมูลจาก API
-    const fetchEmployees = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost/vue01/php_api/employee.php");
+        const response = await fetch("https://fakestoreapi.com/products");
         if (!response.ok) {
           throw new Error("ไม่สามารถดึงข้อมูลได้");
         }
-        employees.value = await response.json();
+        Alldata.value = await response.json();
       } catch (err) {
         error.value = err.message;
       } finally {
@@ -69,11 +73,11 @@ export default {
     };
 
     onMounted(() => {
-      fetchEmployees();
+      fetchData();
     });
 
     return {
-      employees,
+      Alldata,
       loading,
       error
     };
