@@ -84,6 +84,34 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "contact" */ '../views/sh_product.vue')
   }
+  ,
+  {
+    path: '/customer_edit',
+    name: 'customer_edit',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "contact" */ '../views/Customer_edit.vue')
+  }
+  ,
+  {
+    path: '/emp_edit',
+    name: 'emp_edit',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "contact" */ '../views/Emp_edit.vue')
+  }
+  ,
+  {
+    path: '/type_edit',
+    name: 'type_edit',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "contact" */ '../views/Edit_type.vue')
+  }
+  
 ]
 
 const router = createRouter({
