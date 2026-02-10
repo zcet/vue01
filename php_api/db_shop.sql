@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 01, 2026 at 12:22 PM
+-- Generation Time: Feb 10, 2026 at 02:44 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -105,6 +105,31 @@ INSERT INTO `products` (`product_id`, `product_name`, `description`, `price`, `i
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `student`
+--
+
+CREATE TABLE `student` (
+  `student_id` int(11) UNSIGNED ZEROFILL NOT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `phone` varchar(15) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`student_id`, `first_name`, `last_name`, `phone`, `email`) VALUES
+(00000000001, 'John', 'Doe', '0812345678', 'john.doe@example.com'),
+(00000000002, 'Jane', 'Smith', '0819876543', 'jane.smith@example.com'),
+(00000000003, 'Michael', 'Brown', '0823456789', 'michael.brown@example.com'),
+(00000000004, 'Emily', 'Johnson', '0834567890', 'emily.johnson@example.com'),
+(00000000005, 'Chris', 'Williams', '0845678901', 'chris.williams@example.com');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `type`
 --
 
@@ -146,6 +171,12 @@ ALTER TABLE `products`
   ADD PRIMARY KEY (`product_id`);
 
 --
+-- Indexes for table `student`
+--
+ALTER TABLE `student`
+  ADD PRIMARY KEY (`student_id`);
+
+--
 -- Indexes for table `type`
 --
 ALTER TABLE `type`
@@ -172,6 +203,12 @@ ALTER TABLE `employees`
 --
 ALTER TABLE `products`
   MODIFY `product_id` int(11) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `student`
+--
+ALTER TABLE `student`
+  MODIFY `student_id` int(11) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `type`
