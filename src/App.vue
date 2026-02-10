@@ -53,6 +53,9 @@
         <li class="nav-item">
           <a class="nav-link" href="/type_edit">Type_edit</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/std">Student</a>
+        </li>
           </ul>
         </li>
         <li class="nav-item">
