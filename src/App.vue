@@ -27,9 +27,6 @@
           <a class="nav-link" href="/Type">Type</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/Employees">Employees</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link" href="/Product">Product</a>
         </li>
         <li class="nav-item">
@@ -47,14 +44,28 @@
                    <li class="nav-item">
           <a class="nav-link" href="/Customer_edit">Customer_edit</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/emp_edit">Emp_edit</a>
-        </li>
+
         <li class="nav-item">
           <a class="nav-link" href="/type_edit">Type_edit</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/std">Student</a>
+        </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Employees
+          </a>
+          <ul class="dropdown-menu">
+                  <li class="nav-item">
+                 <a class="nav-link" href="/Employees">Employees</a>
+        </li>
+                <li class="nav-item">
+          <a class="nav-link" href="/emp_edit">Emp_edit</a>
+        </li>
+                  <li class="nav-item">
+                 <a class="nav-link" href="/Emp_image">Employees_edit_image</a>
         </li>
           </ul>
         </li>
