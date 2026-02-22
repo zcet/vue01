@@ -1,51 +1,66 @@
 <template>
-  <div class="container mt-4">
-    <h2 class="mb-3">แสดงข้อมูลสินค้า</h2>
-    
-
-     <div class="mb-3 text-start">
-      <a class="btn btn-primary" href="/add_customer" role="button">Add+</a>
-    </div>
-    <!-- ตารางแสดงข้อมูลลูกค้า -->
-    <table class="table table-bordered table-striped">
-      <thead class="table-dark">
-        <tr>
-          <th>ลำดับที่</th>
-          <th>รหัสสินค้า</th>
-          <th>ชื่อสินค้า</th>
-          <th>รายละเอียด</th>
-          <th>ราคา</th>
-          <th>จำนวน</th>
-          <th>รูปภาพ</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="data,index in Alldata" :key="data.product_id">
-          <td>{{ index + 1 }}</td>   <!--แสดงลำดับที่-->
-          <td>{{ data.product_id }}</td>
-          <td>{{ data.product_name }}</td>
-          <td>{{ data.description }}</td>
-          <td>{{ data.price }}</td>
-          <td>{{ data.stock }}</td>
-         <td>
-        <img
-            :src="'http://127.0.0.1/vue01/php_api/uploads/' + data.image"
-            width="150"
-            height="150" >
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- Loading -->
-    <div v-if="loading" class="text-center">
-      <p>กำลังโหลดข้อมูล...</p>
+  <br>
+  <div class="container mt-0">
+    <!-- ✅ Loading -->
+    <div v-if="loading" class="text-center my-5">
+      <div class="spinner-border text-primary"></div>
+      <p class="mt-3">กำลังโหลดสินค้า...</p>
     </div>
 
-    <!-- Error -->
-    <div v-if="error" class="alert alert-danger">
+    <!-- ✅ Error -->
+    <div v-else-if="error" class="alert alert-danger text-center">
       {{ error }}
     </div>
+
+    <!-- ✅ Product Section -->
+    <div v-else class="mb-5">
+      <h3 class="mb-4 fw-bold">สินค้าแนะนำ</h3>
+
+      <div class="row">
+        <div 
+          class="col-md-3 mb-4" 
+          v-for="product in Alldata" 
+          :key="product.product_id"
+        >
+          <div class="card h-100 shadow-sm">
+
+            <!-- ✅ รูปสินค้า -->
+            <img 
+              :src="getImage(product.image)" 
+              class="card-img-top"
+              style="height: 200px; object-fit: cover;"
+            />
+
+            <div class="card-body">
+              <h6 class="card-title">
+                {{ product.product_name }}
+              </h6>
+
+              <p class="text-primary fw-bold">
+                {{ product.price }} บาท
+              </p>
+            </div>
+
+            <div class="card-footer bg-white border-0">
+
+              <!-- ✅ ปุ่ม Detail -->
+              <router-link 
+                :to="'/ProductDetail?id=' + product.product_id"
+                class="btn btn-sm btn-outline-primary w-100 mb-2"
+              >
+                ดูรายละเอียด
+              </router-link>
+
+              <button class="btn btn-sm btn-primary w-100">
+                เพิ่มลงตะกร้า
+              </button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -53,22 +68,42 @@
 import { ref, onMounted } from "vue";
 
 export default {
-  name: "DataList",
+  name: "HomeView",   // ✅ แก้จาก "Home" เป็นหลายคำ
   setup() {
+
     const Alldata = ref([]);
     const loading = ref(true);
     const error = ref(null);
 
-    // ฟังก์ชันดึงข้อมูลจาก API
+    const getImage = (image) => {
+      if (!image) {
+        return "https://via.placeholder.com/300x200?text=No+Image";
+      }
+      return `http://localhost/vue01/php_api/uploads/${image}`;
+    };
+
     const fetchData = async () => {
       try {
-        const response = await fetch("http://127.0.0.1/vue01/php_api/show_product.php");
+
+        const response = await fetch(
+          "http://localhost/vue01/php_api/show_product.php"
+        );
+
         if (!response.ok) {
-          throw new Error("ไม่สามารถดึงข้อมูลได้");
+          throw new Error("โหลดข้อมูลสินค้าไม่ได้");
         }
-        Alldata.value = await response.json();
+
+        const data = await response.json();
+
+        if (!data || data.length === 0) {
+          throw new Error("ไม่มีสินค้าในระบบ");
+        }
+
+        Alldata.value = data;
+
       } catch (err) {
         error.value = err.message;
+        console.error(err.message);
       } finally {
         loading.value = false;
       }
@@ -81,7 +116,8 @@ export default {
     return {
       Alldata,
       loading,
-      error
+      error,
+      getImage
     };
   }
 };
